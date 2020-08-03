@@ -82,7 +82,9 @@ public:
     const data_size_t cnt =
       query_boundaries_[query_id + 1] - query_boundaries_[query_id];
     // get max DCG on current query
-    const double inverse_max_dcg = inverse_max_dcgs_[query_id];
+    // const double inverse_max_dcg = inverse_max_dcgs_[query_id];
+    // set inverse_max_dcg as 1.0, so as to optimized dcg directly
+    const double inverse_max_dcg = 1.0;
     // add pointers with offset
     const label_t* label = label_ + start;
     score += start;
