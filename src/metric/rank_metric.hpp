@@ -127,7 +127,13 @@ public:
                                 query_boundaries_[i + 1] - query_boundaries_[i], &tmp_dcg);
           // calculate NDCG
           for (size_t j = 0; j < eval_at_.size(); ++j) {
-            result_buffer_[tid][j] += tmp_dcg[j] * inverse_max_dcgs_[i][j] * query_weights_[i];
+          // result_buffer_[tid][j] += tmp_dcg[j] * inverse_max_dcgs_[i][j] * query_weights_[i];
+          // calc dcg, not ndcg, so as to optimize dcg directly
+            if (inverse_max_dcgs_[i][j] < 0){
+              result_buffer_[tid][j] += tmp_dcg[j]  * inverse_max_dcgs_[i][j] *  query_weights_[i];
+            }else{
+              result_buffer_[tid][j] += tmp_dcg[j] * query_weights_[i];
+            }
           }
         }
       }
